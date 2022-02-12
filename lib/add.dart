@@ -144,7 +144,8 @@ class _Add1State extends State<Add1> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue[200],
+          backgroundColor: Colors.white12,
+          elevation: 0.0,
           centerTitle: true,
           title: const Text(
             'Add Property',
@@ -245,12 +246,19 @@ class _Add1State extends State<Add1> {
                   child: DropdownButton<String>(
                     hint: Text("Select location"),
                     items: [
+                      "Al anbar",
+                      "Baghdad",
+                      "Basrah",
                       "Duhok",
-                      "Hawler",
-                      "Zakho",
-                      "Sulaymaniah",
+                      "Erbil",
+                      "Halabja shahid",
+                      "Karbalah",
                       "Kirkuk",
-                      "Halabja shahid"
+                      "Nainawa",
+                      "Nasiriah",
+                      "Rania",
+                      "Sulaymaniah",
+                      "Zakho",
                     ]
                         .map((e) => DropdownMenuItem(
                               child: Text("$e"),
@@ -417,7 +425,7 @@ class _Add1State extends State<Add1> {
                   child: Row(
                     children: [
                       Icon(
-                        Icons.price_change,
+                        Icons.monetization_on_sharp,
                         color: Colors.blue[400],
                       ),
                       Text(" Price"),

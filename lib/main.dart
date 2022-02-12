@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homee1/filter.dart';
 import 'package:homee1/homepage.dart';
 import 'package:homee1/favorite.dart';
 import 'package:homee1/langcurrency.dart';
@@ -25,7 +26,6 @@ class MyApp extends StatelessWidget {
           //  primarySwatch: Colors.blue,
           ),
       home: SplashScreen(),
-      // home: Language1(),
       debugShowCheckedModeBanner: false,
     );
   }

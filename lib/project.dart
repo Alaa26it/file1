@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homee1/blog.dart';
+import 'package:homee1/filter.dart';
 import 'package:homee1/homepage.dart';
 import 'package:homee1/langcurrency.dart';
 import 'package:homee1/main.dart';
@@ -22,11 +23,8 @@ class _Project1State extends State<Project1> {
         key: scaffoldkey,
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Colors.blue[200],
-          title: const Text(
-            'project',
-            style: TextStyle(color: Colors.grey),
-          ),
+          backgroundColor: Colors.white12,
+          elevation: 0.0,
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context)
@@ -39,6 +37,49 @@ class _Project1State extends State<Project1> {
                 color: Colors.blue[800],
               )),
           actions: [
+            Container(
+                margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      minimumSize: Size(30, 40),
+                      backgroundColor: Colors.blue[200],
+                      primary: Colors.blue[800]),
+                  onPressed: () {},
+                  icon: Icon(Icons.maps_home_work),
+                  label: Text("Maps"),
+                )),
+            Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                      minimumSize: Size(30, 40),
+                      backgroundColor: Colors.blue[200],
+                      primary: Colors.blue[800]),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacement(MaterialPageRoute(builder: (context) {
+                      return Filter1();
+                    }));
+                  },
+                  icon: Icon(Icons.filter_list_sharp),
+                  label: Text("Filter"),
+                )),
+            IconButton(
+                onPressed: () {
+                  showModalBottomSheet(
+                      backgroundColor: Colors.indigo.withOpacity(0.7),
+                      isScrollControlled: true,
+                      context: context,
+                      builder: (context) {
+                        return Sheet2();
+                      });
+                },
+                icon: Icon(
+                  Icons.compress_sharp,
+                  color: Colors.blue[800],
+                )),
             IconButton(
                 onPressed: () {
                   scaffoldkey.currentState?.openEndDrawer();
@@ -232,5 +273,85 @@ class _Project1State extends State<Project1> {
         body: Center(
           child: Text("project"),
         ));
+  }
+}
+
+class Sheet2 extends StatefulWidget {
+  Sheet2({Key? key}) : super(key: key);
+
+  @override
+  State<Sheet2> createState() => _Sheet2State();
+}
+
+class _Sheet2State extends State<Sheet2> {
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      children: [
+        Container(
+          width: double.infinity,
+          height: MediaQuery.of(context).size.height * 6,
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      child: Text(
+                    "Sort By",
+                    style: TextStyle(
+                        color: Colors.indigo[100],
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold),
+                  )),
+                  Container(
+                    margin: EdgeInsets.only(top: 25),
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 25,
+                        )),
+                  ),
+                ],
+              ),
+              Container(
+                  child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo[200]!.withOpacity(0.5)),
+                      onPressed: () {},
+                      icon: Icon(Icons.local_fire_department_outlined),
+                      label: Text("Popular"))),
+              Container(
+                  child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo[200]!.withOpacity(0.5)),
+                      onPressed: () {},
+                      icon: Icon(Icons.new_releases),
+                      label: Text("Newest"))),
+              Container(
+                  child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo[200]!.withOpacity(0.5)),
+                      onPressed: () {},
+                      icon: Icon(Icons.arrow_downward_sharp),
+                      label: Text("Lowest Price"))),
+              Container(
+                  child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.indigo[200]!.withOpacity(0.5)),
+                      onPressed: () {},
+                      icon: Icon(Icons.arrow_upward_sharp),
+                      label: Text("Highest Price"))),
+            ],
+          ),
+        )
+      ],
+    );
   }
 }

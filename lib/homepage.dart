@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homee1/blog.dart';
+import 'package:homee1/filter.dart';
 import 'package:homee1/langcurrency.dart';
 import 'package:homee1/main.dart';
 import 'package:homee1/save.dart';
@@ -21,7 +22,8 @@ class _Homepage1State extends State<Homepage1> {
         key: scaffoldkey,
         appBar: AppBar(
           centerTitle: true,
-          backgroundColor: Colors.blue[200],
+          backgroundColor: Colors.white12,
+          elevation: 0.0,
           leading: IconButton(
               onPressed: () {
                 Navigator.of(context)
@@ -34,6 +36,34 @@ class _Homepage1State extends State<Homepage1> {
                 color: Colors.blue[800],
               )),
           actions: [
+            Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0)),
+                      minimumSize: Size(30, 40),
+                      backgroundColor: Colors.blue[200],
+                      primary: Colors.blue[800]),
+                  onPressed: () {},
+                  icon: Icon(Icons.maps_home_work),
+                  label: Text("Maps"),
+                )),
+            Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.blue[200],
+                      primary: Colors.blue[800]),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacement(MaterialPageRoute(builder: (context) {
+                      return Filter1();
+                    }));
+                  },
+                  icon: Icon(Icons.filter_list_sharp),
+                  label: Text("Filter"),
+                )),
             IconButton(
                 onPressed: () {
                   scaffoldkey.currentState?.openEndDrawer();
@@ -43,10 +73,6 @@ class _Homepage1State extends State<Homepage1> {
                   color: Colors.blue[800],
                 )),
           ],
-          title: Text(
-            "Homepage",
-            style: TextStyle(color: Colors.grey),
-          ),
         ),
         endDrawer: Drawer(
           child: Column(children: [
@@ -231,3 +257,36 @@ class _Homepage1State extends State<Homepage1> {
         body: Text("homepage"));
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+ Container(
+                          margin: EdgeInsets.only(bottom: 140),
+                          child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                  minimumSize: Size(130, 40),
+                                  backgroundColor: Colors.white),
+                              onPressed: () {},
+                              child: Text("$selectedIndexrange2 ")),
+                        ),
+                        Container(
+                          child: OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                  minimumSize: Size(130, 40),
+                                  backgroundColor: Colors.white),
+                              onPressed: () {},
+                              child: Text("$selectedIndexrange3")),
+                        ),*/

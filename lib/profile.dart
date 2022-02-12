@@ -20,7 +20,8 @@ class _Account1State extends State<Account1> {
     return Scaffold(
         key: scaffoldkey,
         appBar: AppBar(
-          backgroundColor: Colors.blue[200],
+          backgroundColor: Colors.white12,
+          elevation: 0.0,
           centerTitle: true,
           title: const Text(
             'Profile',
