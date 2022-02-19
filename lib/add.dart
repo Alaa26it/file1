@@ -6,6 +6,7 @@ import 'package:homee1/main.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 
 class Add1 extends StatefulWidget {
   @override
@@ -139,6 +140,51 @@ class _Add1State extends State<Add1> {
   bool vacuum = false;
   bool garret = false;
   bool basement = false;
+  //////////////////////////////////////
+
+  String? propertyType;
+  String? selectedProperty;
+  int _selected = 0;
+/////////////////////////////////////
+
+  Widget _icon(int index, {String? text, IconData? icon}) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: InkResponse(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.3,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3),
+              border: Border.all(
+                  color: _selected == index ? Colors.blue : Colors.grey)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                color: _selected == index ? Colors.blue : Colors.grey,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(text!,
+                  style: TextStyle(
+                      color: _selected == index ? Colors.blue : Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400)),
+            ],
+          ),
+        ),
+        onTap: () => setState(
+          () {
+            _selected = index;
+            selectedProperty = text;
+          },
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -322,64 +368,106 @@ class _Add1State extends State<Add1> {
                     ],
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                          margin: EdgeInsets.all(5),
-                          child: customRadio1(homee1[0], 0)),
-                      Container(
-                          margin: EdgeInsets.all(5),
-                          child: customRadio1(homee1[1], 1)),
-                      Container(
-                          margin: EdgeInsets.all(5),
-                          child: customRadio1(homee1[2], 2)),
-                      SizedBox(
-                        height: 30.0,
-                      ),
-                    ],
-                  ),
+                CustomRadioButton(
+                  padding: 0,
+                  width: MediaQuery.of(context).size.width * 0.3,
+                  elevation: 0,
+                  absoluteZeroSpacing: false,
+                  spacing: 3,
+                  margin: EdgeInsets.zero,
+                  unSelectedColor: Colors.transparent,
+                  selectedBorderColor: Colors.blue,
+                  unSelectedBorderColor: Colors.grey,
+                  autoWidth: false,
+                  enableShape: true,
+                  radius: 3,
+                  height: 55,
+                  buttonLables: const [
+                    'Residential',
+                    'Plot',
+                    'Commercial',
+                  ],
+                  buttonValues: const [
+                    "1",
+                    "2",
+                    "3",
+                  ],
+                  buttonTextStyle: const ButtonTextStyle(
+                      selectedColor: Colors.blue,
+                      unSelectedColor: Colors.black,
+                      textStyle:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.w400)),
+                  radioButtonValue: (value) {
+                    setState(() {
+                      propertyType = value.toString();
+                    });
+                  },
+                  selectedColor: Colors.transparent,
                 ),
-                Container(
-                  width: double.infinity,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                            margin: EdgeInsets.all(5),
-                            child:
-                                customRadio2(widgets[0], 0, Icons.apartment)),
-                        Container(
-                            margin: EdgeInsets.all(5),
-                            child: customRadio2(widgets[1], 1, Icons.house)),
-                        Container(
-                            margin: EdgeInsets.all(5),
-                            child: customRadio2(
-                                widgets[2], 2, Icons.home_outlined)),
-                        Container(
-                            margin: EdgeInsets.all(5),
-                            child: customRadio2(
-                                widgets[3], 3, Icons.maps_home_work_sharp)),
-                        Container(
-                            margin: EdgeInsets.all(5),
-                            child: customRadio2(widgets[4], 4, Icons.villa)),
-                        Container(
-                            margin: EdgeInsets.all(5),
-                            child: customRadio2(
-                                widgets[5], 5, Icons.house_rounded)),
-                        SizedBox(
-                          height: 30.0,
+                propertyType == null || propertyType == '1'
+                    ? SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            _icon(0,
+                                text: "Appartment", icon: Icons.location_city),
+                            _icon(1,
+                                text: "House", icon: Icons.storefront_sharp),
+                            _icon(2,
+                                text: "Lover Portion",
+                                icon: Icons.house_siding_sharp),
+                            _icon(3,
+                                text: "Upper Portion",
+                                icon: Icons.home_work_outlined),
+                            _icon(4, text: "Villa", icon: Icons.villa_outlined),
+                            _icon(5,
+                                text: "Farmhouse",
+                                icon: Icons.holiday_village_outlined)
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ),
+                      )
+                    : Container(),
+                propertyType == '2'
+                    ? SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            _icon(0,
+                                text: "Residential Plot",
+                                icon: Icons.real_estate_agent_outlined),
+                            _icon(1,
+                                text: "Commercial Plot",
+                                icon: Icons.location_city_rounded),
+                            _icon(2,
+                                text: "Agricultrual Land",
+                                icon: Icons.agriculture_outlined),
+                            _icon(3,
+                                text: "Industiral Land", icon: Icons.ac_unit),
+                            _icon(4, text: "Other", icon: Icons.more_horiz),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                propertyType == '3'
+                    ? SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            _icon(0,
+                                text: "Office",
+                                icon: Icons.maps_home_work_outlined),
+                            _icon(1,
+                                text: "Shop", icon: Icons.storefront_sharp),
+                            _icon(2,
+                                text: "Warehouse",
+                                icon: Icons.house_siding_rounded),
+                            _icon(3,
+                                text: "Building", icon: Icons.location_city),
+                            _icon(4, text: "Other", icon: Icons.more_horiz),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 Container(
                   margin: EdgeInsets.only(left: 20, top: 15),
                   child: Row(
