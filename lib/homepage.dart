@@ -46,7 +46,7 @@ class _Homepage1State extends State<Homepage1> {
                       backgroundColor: Colors.blue[200],
                       primary: Colors.blue[800]),
                   onPressed: () {},
-                  icon: Icon(Icons.maps_home_work),
+                  icon: Icon(Icons.room),
                   label: Text("Maps"),
                 )),
             Container(
@@ -257,36 +257,3 @@ class _Homepage1State extends State<Homepage1> {
         body: Text("homepage"));
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-
- Container(
-                          margin: EdgeInsets.only(bottom: 140),
-                          child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  minimumSize: Size(130, 40),
-                                  backgroundColor: Colors.white),
-                              onPressed: () {},
-                              child: Text("$selectedIndexrange2 ")),
-                        ),
-                        Container(
-                          child: OutlinedButton(
-                              style: OutlinedButton.styleFrom(
-                                  minimumSize: Size(130, 40),
-                                  backgroundColor: Colors.white),
-                              onPressed: () {},
-                              child: Text("$selectedIndexrange3")),
-                        ),*/

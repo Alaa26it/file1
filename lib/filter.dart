@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homee1/main.dart';
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 
 class Filter1 extends StatefulWidget {
   Filter1({Key? key}) : super(key: key);
@@ -78,11 +79,65 @@ class _Filter1State extends State<Filter1> {
   List<String> bath = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
   int selectedIndexbath = 0;
   int selectedIndexbed = 0;
+
+  String? propertyType;
+  String? selectedProperty;
+  int _selected = 0;
+/////////////////////////////////////
+
+  Widget _icon(int index, {String? text, IconData? icon}) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: InkResponse(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.3,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(3),
+              border: Border.all(
+                  color: _selected == index ? Colors.blue : Colors.grey)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                color: _selected == index ? Colors.blue : Colors.grey,
+              ),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(text!,
+                  style: TextStyle(
+                      color: _selected == index ? Colors.blue : Colors.grey,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400)),
+            ],
+          ),
+        ),
+        onTap: () => setState(
+          () {
+            _selected = index;
+            selectedProperty = text;
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldkey1,
         appBar: AppBar(
+          actions: [
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size(5, 5),
+                    primary: Colors.white,
+                    onPrimary: Colors.blue),
+                onPressed: () {},
+                child: Text("Reset"))
+          ],
           backgroundColor: Colors.white12,
           elevation: 0.0,
           title: Text("Filter", style: TextStyle(color: Colors.blue[200])),
@@ -156,7 +211,7 @@ class _Filter1State extends State<Filter1> {
                   value: city1,
                 ),
               )),
-          Container(
+          /*  Container(
             margin: EdgeInsets.only(left: 10, bottom: 15, top: 20),
             child: Row(
               children: [
@@ -219,328 +274,442 @@ class _Filter1State extends State<Filter1> {
                 ],
               ),
             ),
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          ),*/
+
+          Column(children: [
             Container(
-                margin: EdgeInsets.only(bottom: 20, top: 40, left: 10),
-                child: Icon(
-                  Icons.monetization_on_sharp,
-                  color: Colors.blue[400],
+              margin: EdgeInsets.only(left: 20, bottom: 5),
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.home,
+                    color: Colors.blue[400],
+                  ),
+                  Text("  Property Type"),
+                ],
+              ),
+            ),
+            CustomRadioButton(
+              padding: 0,
+              width: MediaQuery.of(context).size.width * 0.3,
+              elevation: 0,
+              absoluteZeroSpacing: false,
+              spacing: 3,
+              margin: EdgeInsets.zero,
+              unSelectedColor: Colors.transparent,
+              selectedBorderColor: Colors.blue,
+              unSelectedBorderColor: Colors.grey,
+              autoWidth: false,
+              enableShape: true,
+              radius: 3,
+              height: 55,
+              buttonLables: const [
+                'Residential',
+                'Plot',
+                'Commercial',
+              ],
+              buttonValues: const [
+                "1",
+                "2",
+                "3",
+              ],
+              buttonTextStyle: const ButtonTextStyle(
+                  selectedColor: Colors.blue,
+                  unSelectedColor: Colors.black,
+                  textStyle:
+                      TextStyle(fontSize: 13, fontWeight: FontWeight.w400)),
+              radioButtonValue: (value) {
+                setState(() {
+                  propertyType = value.toString();
+                });
+              },
+              selectedColor: Colors.transparent,
+            ),
+            propertyType == null || propertyType == '1'
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _icon(0, text: "Appartment", icon: Icons.location_city),
+                        _icon(1, text: "Villa", icon: Icons.villa_outlined),
+                        _icon(2, text: " House", icon: Icons.storefront_sharp),
+                        _icon(3, text: "Farm ", icon: Icons.home_work_outlined),
+                        _icon(4,
+                            text: "Others",
+                            icon: Icons.holiday_village_outlined),
+                      ],
+                    ),
+                  )
+                : Container(),
+            propertyType == '2'
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _icon(0,
+                            text: "Commercial Plot",
+                            icon: Icons.location_city_rounded),
+                        _icon(1, text: "Industiral Land", icon: Icons.ac_unit),
+                        _icon(2,
+                            text: "Residential Plot",
+                            icon: Icons.real_estate_agent_outlined),
+                        _icon(3,
+                            text: "Agricultrual Plot",
+                            icon: Icons.agriculture_outlined),
+                        _icon(4,
+                            text: "Plot File", icon: Icons.file_present_sharp),
+                      ],
+                    ),
+                  )
+                : Container(),
+            propertyType == '3'
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _icon(0,
+                            text: "Office",
+                            icon: Icons.maps_home_work_outlined),
+                        _icon(1, text: "Shop", icon: Icons.storefront_sharp),
+                        _icon(2,
+                            text: "Warehouse",
+                            icon: Icons.house_siding_rounded),
+                        _icon(3,
+                            text: "Commercial Floor",
+                            icon: Icons.insert_chart_outlined_sharp),
+                        _icon(4,
+                            text: "Commercial Building",
+                            icon: Icons.holiday_village),
+                        _icon(5, text: "Factory ", icon: Icons.location_city),
+                        _icon(6, text: "Showroom ", icon: Icons.shower),
+                        _icon(7,
+                            text: "Commercial Property ", icon: Icons.layers),
+                      ],
+                    ),
+                  )
+                : Container(),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Container(
+                  margin: EdgeInsets.only(bottom: 20, top: 40, left: 10),
+                  child: Icon(
+                    Icons.monetization_on_sharp,
+                    color: Colors.blue[400],
+                  )),
+              Container(
+                margin: EdgeInsets.only(bottom: 20, top: 40, left: 5),
+                child: Text(
+                  "Price Range",
+                  style: TextStyle(color: Colors.blue[800]),
+                ),
+              ),
+            ]),
+            Container(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            minimumSize: Size(140, 40),
+                            backgroundColor: Colors.grey[100]),
+                        onPressed: () {
+                          showModalBottomSheet(
+                              backgroundColor: Colors.indigo.withOpacity(0.7),
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (context) {
+                                return Sheet1();
+                              });
+                        },
+                        child: Text(
+                          "${range2[selectedIndexrange2]}",
+                          style: TextStyle(color: Colors.grey),
+                        )),
+                  ),
+                  Text(
+                    "To",
+                    style: TextStyle(color: Colors.indigo),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            minimumSize: Size(140, 40),
+                            backgroundColor: Colors.grey[100]),
+                        onPressed: () {
+                          showModalBottomSheet(
+                              backgroundColor: Colors.indigo.withOpacity(0.7),
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (context) {
+                                return Sheet1();
+                              });
+                        },
+                        child: Text(
+                          "${range3[selectedIndexrange3]}",
+                          style: TextStyle(color: Colors.grey),
+                        )),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                ],
+              ),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Container(
+                  margin: EdgeInsets.only(bottom: 20, top: 40, left: 10),
+                  child: Icon(Icons.bedroom_parent_outlined)),
+              Container(
+                margin: EdgeInsets.only(bottom: 20, top: 40, left: 5),
+                child: Text(
+                  "Bedrooms",
+                  style: TextStyle(color: Colors.blue[800]),
+                ),
+              ),
+            ]),
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 30),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[0], 0)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[1], 1)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[2], 2)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[3], 3)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[4], 4)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[5], 5)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[6], 6)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[7], 7)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[8], 8)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[9], 9)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobed(bedroom[10], 10)),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Divider(
+              color: Colors.indigo[200],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Container(
+                  margin: EdgeInsets.only(bottom: 20, top: 5, left: 10),
+                  child: Icon(Icons.bathroom_outlined)),
+              Container(
+                margin: EdgeInsets.only(bottom: 20, top: 5, left: 5),
+                child: Text(
+                  "Bathrooms",
+                  style: TextStyle(color: Colors.blue[800]),
+                ),
+              ),
+            ]),
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(bottom: 30),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[0], 0)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[1], 1)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[2], 2)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[3], 3)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[4], 4)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[5], 5)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[6], 6)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[7], 7)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[8], 8)),
+                    Container(
+                        margin: EdgeInsets.all(5),
+                        child: customRadiobath(bath[9], 9)),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Divider(
+              color: Colors.indigo[200],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Container(
+                  margin: EdgeInsets.only(bottom: 20, top: 40, left: 10),
+                  child: Icon(Icons.aspect_ratio)),
+              Container(
+                margin: EdgeInsets.only(bottom: 20, top: 40, left: 5),
+                child: Text(
+                  "Area Range",
+                  style: TextStyle(color: Colors.blue[800]),
+                ),
+              ),
+            ]),
+            Container(
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            minimumSize: Size(140, 40),
+                            backgroundColor: Colors.grey[100]),
+                        onPressed: () {
+                          showModalBottomSheet(
+                              backgroundColor: Colors.indigo.withOpacity(0.7),
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (context) {
+                                return Sheet1();
+                              });
+                        },
+                        child: Text(
+                          "${range2[selectedIndexrange2]}",
+                          style: TextStyle(color: Colors.grey),
+                        )),
+                  ),
+                  Text(
+                    "To",
+                    style: TextStyle(color: Colors.indigo),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            minimumSize: Size(140, 40),
+                            backgroundColor: Colors.grey[100]),
+                        onPressed: () {
+                          showModalBottomSheet(
+                              backgroundColor: Colors.indigo.withOpacity(0.7),
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (context) {
+                                return Sheet1();
+                              });
+                        },
+                        child: Text(
+                          "${range3[selectedIndexrange3]}",
+                          style: TextStyle(color: Colors.grey),
+                        )),
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                ],
+              ),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Container(
+                  margin: EdgeInsets.only(bottom: 20, top: 40, left: 10),
+                  child: Icon(Icons.real_estate_agent_sharp)),
+              Container(
+                margin: EdgeInsets.only(bottom: 20, top: 40, left: 5),
+                child: Text(
+                  "Agency",
+                  style: TextStyle(color: Colors.blue[800]),
+                ),
+              ),
+            ]),
+            Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.blue.shade200, width: 2)),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    hint: Text("Select Agency"),
+                    items: [
+                      "Al anbar",
+                      "Baghdad",
+                      "Basrah",
+                      "Duhok",
+                      "Erbil",
+                      "Halabja shahid",
+                      "Karbalah",
+                      "Kirkuk",
+                      "Nainawa",
+                      "Nasiriah",
+                      "Rania",
+                      "Sulaymaniah",
+                      "Zakho",
+                    ]
+                        .map((e) => DropdownMenuItem(
+                              child: Text("$e"),
+                              value: e,
+                            ))
+                        .toList(),
+                    onChanged: (String? val) {
+                      setState(() {
+                        agency = val!;
+                      });
+                    },
+                    value: agency,
+                  ),
                 )),
-            Container(
-              margin: EdgeInsets.only(bottom: 20, top: 40, left: 5),
-              child: Text(
-                "Price Range",
-                style: TextStyle(color: Colors.blue[800]),
-              ),
-            ),
-          ]),
-          Container(
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          minimumSize: Size(140, 40),
-                          backgroundColor: Colors.grey[100]),
-                      onPressed: () {
-                        showModalBottomSheet(
-                            backgroundColor: Colors.indigo.withOpacity(0.7),
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) {
-                              return Sheet1();
-                            });
-                      },
-                      child: Text(
-                        "${range2[selectedIndexrange2]}",
-                        style: TextStyle(color: Colors.grey),
-                      )),
-                ),
-                Text(
-                  "To",
-                  style: TextStyle(color: Colors.indigo),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          minimumSize: Size(140, 40),
-                          backgroundColor: Colors.grey[100]),
-                      onPressed: () {
-                        showModalBottomSheet(
-                            backgroundColor: Colors.indigo.withOpacity(0.7),
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) {
-                              return Sheet1();
-                            });
-                      },
-                      child: Text(
-                        "${range3[selectedIndexrange3]}",
-                        style: TextStyle(color: Colors.grey),
-                      )),
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-              ],
-            ),
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Container(
-                margin: EdgeInsets.only(bottom: 20, top: 40, left: 10),
-                child: Icon(Icons.bedroom_parent_outlined)),
-            Container(
-              margin: EdgeInsets.only(bottom: 20, top: 40, left: 5),
-              child: Text(
-                "Bedrooms",
-                style: TextStyle(color: Colors.blue[800]),
-              ),
-            ),
-          ]),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(bottom: 30),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[0], 0)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[1], 1)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[2], 2)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[3], 3)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[4], 4)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[5], 5)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[6], 6)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[7], 7)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[8], 8)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[9], 9)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobed(bedroom[10], 10)),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Divider(
-            color: Colors.indigo[200],
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Container(
-                margin: EdgeInsets.only(bottom: 20, top: 5, left: 10),
-                child: Icon(Icons.bathroom_outlined)),
-            Container(
-              margin: EdgeInsets.only(bottom: 20, top: 5, left: 5),
-              child: Text(
-                "Bathrooms",
-                style: TextStyle(color: Colors.blue[800]),
-              ),
-            ),
-          ]),
-          Container(
-            width: double.infinity,
-            margin: EdgeInsets.only(bottom: 30),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[0], 0)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[1], 1)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[2], 2)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[3], 3)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[4], 4)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[5], 5)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[6], 6)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[7], 7)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[8], 8)),
-                  Container(
-                      margin: EdgeInsets.all(5),
-                      child: customRadiobath(bath[9], 9)),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Divider(
-            color: Colors.indigo[200],
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Container(
-                margin: EdgeInsets.only(bottom: 20, top: 40, left: 10),
-                child: Icon(Icons.aspect_ratio)),
-            Container(
-              margin: EdgeInsets.only(bottom: 20, top: 40, left: 5),
-              child: Text(
-                "Area Range",
-                style: TextStyle(color: Colors.blue[800]),
-              ),
-            ),
-          ]),
-          Container(
-            width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          minimumSize: Size(140, 40),
-                          backgroundColor: Colors.grey[100]),
-                      onPressed: () {
-                        showModalBottomSheet(
-                            backgroundColor: Colors.indigo.withOpacity(0.7),
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) {
-                              return Sheet1();
-                            });
-                      },
-                      child: Text(
-                        "${range2[selectedIndexrange2]}",
-                        style: TextStyle(color: Colors.grey),
-                      )),
-                ),
-                Text(
-                  "To",
-                  style: TextStyle(color: Colors.indigo),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0)),
-                          minimumSize: Size(140, 40),
-                          backgroundColor: Colors.grey[100]),
-                      onPressed: () {
-                        showModalBottomSheet(
-                            backgroundColor: Colors.indigo.withOpacity(0.7),
-                            isScrollControlled: true,
-                            context: context,
-                            builder: (context) {
-                              return Sheet1();
-                            });
-                      },
-                      child: Text(
-                        "${range3[selectedIndexrange3]}",
-                        style: TextStyle(color: Colors.grey),
-                      )),
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-              ],
-            ),
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Container(
-                margin: EdgeInsets.only(bottom: 20, top: 40, left: 10),
-                child: Icon(Icons.real_estate_agent_sharp)),
-            Container(
-              margin: EdgeInsets.only(bottom: 20, top: 40, left: 5),
-              child: Text(
-                "Agency",
-                style: TextStyle(color: Colors.blue[800]),
-              ),
-            ),
-          ]),
-          Container(
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 4),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.blue.shade200, width: 2)),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  hint: Text("Select Agency"),
-                  items: [
-                    "Al anbar",
-                    "Baghdad",
-                    "Basrah",
-                    "Duhok",
-                    "Erbil",
-                    "Halabja shahid",
-                    "Karbalah",
-                    "Kirkuk",
-                    "Nainawa",
-                    "Nasiriah",
-                    "Rania",
-                    "Sulaymaniah",
-                    "Zakho",
-                  ]
-                      .map((e) => DropdownMenuItem(
-                            child: Text("$e"),
-                            value: e,
-                          ))
-                      .toList(),
-                  onChanged: (String? val) {
-                    setState(() {
-                      agency = val!;
-                    });
-                  },
-                  value: agency,
-                ),
-              )),
+          ])
         ]));
   }
 

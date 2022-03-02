@@ -47,7 +47,7 @@ class _Project1State extends State<Project1> {
                       backgroundColor: Colors.blue[200],
                       primary: Colors.blue[800]),
                   onPressed: () {},
-                  icon: Icon(Icons.maps_home_work),
+                  icon: Icon(Icons.room),
                   label: Text("Maps"),
                 )),
             Container(
@@ -77,7 +77,7 @@ class _Project1State extends State<Project1> {
                       });
                 },
                 icon: Icon(
-                  Icons.compress_sharp,
+                  Icons.import_export,
                   color: Colors.blue[800],
                 )),
             IconButton(
